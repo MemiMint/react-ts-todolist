@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, SvgIcon, Typography, Link } from "@mui/joy";
+import { Box, SvgIcon, Typography } from "@mui/joy";
 import { FaGithub } from "react-icons/fa";
 
 export const InfoSide: FC = (): JSX.Element => {
