@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 
-type ILoginState = {
+type IState = {
+    username: string;
     email: string;
-    password: string
+    password: string;
+    confirmPassword: string;
 }
 
-export const useLoginForm = () => {
-    const [state, setState] = useState<ILoginState>({
+export const useRegisterForm = () => {
+    const [state, setState] = useState<IState>({
+        username: "",
         email: "",
-        password: ""
+        password: "",
+        confirmPassword: ""
     });
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        
+
         setState((prevState) => ({
             ...prevState,
             [name]: value
@@ -21,7 +25,7 @@ export const useLoginForm = () => {
     }
 
     const onClick = () => {
-        alert("logged in");
+        alert("registered");
     }
 
     return {

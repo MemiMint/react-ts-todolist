@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box } from "@mui/joy/";
-import { InfoSide, LoginForm } from "../../components/login";
-
+import { LoginForm } from "../../components/login";
+import { InfoSide } from "../../components"
 
 export const Login: FC = (): JSX.Element => {
   return (

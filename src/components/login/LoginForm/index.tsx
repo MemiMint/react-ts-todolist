@@ -1,18 +1,16 @@
 import { FC } from "react";
-import { Box, Typography, FormControl, FormLabel, FormHelperText, Input, Button, IconButton } from "@mui/joy";
+import { Box, Typography, Button } from "@mui/joy";
+import { CustomInput } from "../../CustomInput";
 import { SiPreact } from "react-icons/si";
 import { PiPasswordFill } from "react-icons/pi";
 import { IoMail } from "react-icons/io5";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useLoginForm } from "./hook";
 
 export const LoginForm: FC = (): JSX.Element => {
     const {
         state,
         onChange,
-        onClick,
-        isPasswordShown,
-        toggleShowPassword
+        onClick
     } = useLoginForm();
 
     return (
@@ -32,41 +30,31 @@ export const LoginForm: FC = (): JSX.Element => {
                     <Typography level="title-lg">Welcome back</Typography>
                 </Box>
                 <Box display="flex" flexDirection="column" gap={2} width={"100%"} mt={2} p={2}>
-                    <FormControl>
-                        <FormLabel>Email</FormLabel>
-                        <Input
-                            startDecorator={(
-                                <IoMail />
-                            )}
-                            type='email'
-                            name="email"
-                            value={state.email}
-                            onChange={onChange}
-                            placeholder='Email'
-                            size="md"
-                        />
-                        <FormHelperText></FormHelperText>
-                    </FormControl>
-                    <FormControl >
-                        <FormLabel>Password</FormLabel>
-                        <Input
-                            startDecorator={(
-                                <PiPasswordFill />
-                            )}
-                            size="md"
-                            type={isPasswordShown ? "text" : "password"}
-                            name="password"
-                            value={state.password}
-                            onChange={onChange}
-                            placeholder='password'
-                            endDecorator={(
-                                <IconButton onClick={toggleShowPassword} >
-                                    { isPasswordShown ? <IoMdEye /> : <IoMdEyeOff /> }
-                                </IconButton>
-                            )}
-                        />
-                        <FormHelperText></FormHelperText>
-                    </FormControl>
+                    <CustomInput
+                        size="sm"
+                        startDecorator={(
+                            <IoMail />
+                        )}  
+                        label="Email"
+                        name="email"
+                        type="email"
+                        placeholder="email"
+                        value={state.email}
+                        onChange={onChange}
+                    />
+                    <CustomInput
+                        size="sm" 
+                        startDecorator={
+                            (<PiPasswordFill />)
+                        }
+                        label="Password"
+                        type="password"
+                        name="password"
+                        placeholder="password"
+                        value={state.password}
+                        onChange={onChange}
+                        showEye
+                    />
                     <Button onClick={onClick} >Login</Button>
                     <Typography textAlign="center" level="body-sm">Don't have an account yet? {" "}
                         <Typography color="primary" >
