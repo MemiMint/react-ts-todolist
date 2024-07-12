@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { Box, Typography, Button, Stack } from "@mui/joy";
+import { Box, Typography, Button } from "@mui/joy";
 import { FaPlus } from "react-icons/fa6";
 import { AiOutlineProject } from "react-icons/ai";
-import { FaBookmark } from "react-icons/fa";
 import { TaskList } from "../../components/TaskList";
 
 export const Project: FC = (): JSX.Element => {
