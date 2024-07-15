@@ -35,6 +35,7 @@ export const InfoSide: FC = (): JSX.Element => {
                         <Typography fontWeight={600} color="primary" level="body-sm">Frontend Code </Typography>
                     </Box>
                     <Box
+                        onClick={() => navigate("https://github.com/MemiMint/react-todo-list-api")}
                         gap={1}
                         bgcolor="white"
                         display="flex"
