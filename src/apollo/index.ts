@@ -1,8 +1,7 @@
 import {
     ApolloClient,
     InMemoryCache,
-    HttpLink,
-    from,
+    HttpLink
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 

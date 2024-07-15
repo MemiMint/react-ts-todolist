@@ -111,12 +111,12 @@ export const NewTaskModal: React.FC<IProps> = (props): JSX.Element => {
                     </IconButton>
                   )}
                 </Stack>
-                <Select placeholder="Status" value={state.status} onChange={(event, newValue) => onChangeSelect(event, newValue, "status")} >
+                <Select placeholder="Status" value={state.status} onChange={(event, newValue) => onChangeSelect(newValue, "status", event)} >
                   <Option value="To do">To do</Option>
                   <Option value="In Progress">In Progress</Option>
                   <Option value="Done">Done</Option>
                 </Select>
-                <Select placeholder="risk" value={state.risk} onChange={(event, newValue) => onChangeSelect(event, newValue, "risk")} >
+                <Select placeholder="risk" value={state.risk} onChange={(event, newValue) => onChangeSelect(newValue, "risk", event)} >
                   <Option value="Low" >Low</Option>
                   <Option value="Mid" >Mid</Option>
                   <Option value="High">High</Option>

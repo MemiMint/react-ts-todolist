@@ -48,7 +48,9 @@ export const useNewTaskModal = () => {
         }));
     }
 
-    const onChangeSelect = (event: React.SyntheticEvent | null, newValue: string | null, name: string) => {
+    const onChangeSelect = (newValue: string | null, name: string, event?: React.SyntheticEvent | null ) => {
+        event?.target;
+        
         setState((prevState) => ({
             ...prevState,
             [name]: newValue
