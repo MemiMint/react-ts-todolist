@@ -17,7 +17,7 @@ const routes: RouteObject[] = [
         Component: Dashboard
     },
     {
-        path: "/project",
+        path: "/project/:id",
         Component: Project
     },
     {

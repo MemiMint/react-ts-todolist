@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { Box, Typography, Button } from "@mui/joy";
-import { CustomInput } from "../../CustomInput";
+import { Box, Typography, Button, Link, CircularProgress } from "@mui/joy";
+import { CustomInput } from "../CustomInput";
+import { CustomSnackbar } from "../CustomSnackbar";
 import { SiPreact } from "react-icons/si";
 import { PiPasswordFill } from "react-icons/pi";
 import { IoMail } from "react-icons/io5";
@@ -9,8 +10,14 @@ import { useLoginForm } from "./hook";
 export const LoginForm: FC = (): JSX.Element => {
     const {
         state,
+        emailError,
+        passwordError,
+        snackbarMessage,
+        snackbarOpen,
+        isLoading,
         onChange,
-        onClick
+        onClick,
+        onCloseSnackbar
     } = useLoginForm();
 
     return (
@@ -32,6 +39,8 @@ export const LoginForm: FC = (): JSX.Element => {
                 <Box display="flex" flexDirection="column" gap={2} width={"100%"} mt={2} p={2}>
                     <CustomInput
                         size="sm"
+                        color={emailError ? "danger" : "primary"}
+                        helperText={emailError}
                         startDecorator={(
                             <IoMail />
                         )}  
@@ -43,7 +52,9 @@ export const LoginForm: FC = (): JSX.Element => {
                         onChange={onChange}
                     />
                     <CustomInput
-                        size="sm" 
+                        size="sm"
+                        color={passwordError ? "danger" : "primary"}
+                        helperText={passwordError}
                         startDecorator={
                             (<PiPasswordFill />)
                         }
@@ -55,14 +66,17 @@ export const LoginForm: FC = (): JSX.Element => {
                         onChange={onChange}
                         showEye
                     />
-                    <Button onClick={onClick} >Login</Button>
+                    <Button onClick={onClick}>
+                        { isLoading ? <CircularProgress /> : "Login" }
+                    </Button>
                     <Typography textAlign="center" level="body-sm">Don't have an account yet? {" "}
                         <Typography color="primary" >
-                            create one
+                            <Link href="/register" >Create one</Link>
                         </Typography>
                     </Typography>
                 </Box>
             </Box>
+            <CustomSnackbar color="danger" open={snackbarOpen} label={snackbarMessage} onClose={onCloseSnackbar} />
         </Box>
     )
 }

@@ -1,47 +1,48 @@
 import { FC } from "react";
-import { Avatar, Box, Typography } from "@mui/joy"
-import { SiPreact } from "react-icons/si";
-import { AiOutlineProject, AiOutlineUser } from "react-icons/ai";
-import { FaSearch } from "react-icons/fa";
-import { CustomInput } from "../../components/CustomInput";
-import { ProjectCard } from "../../components";
+import { Box, CircularProgress } from "@mui/joy"
+import { UserNavbar } from "../../components";
+import { ProjectList } from "../../components/ProjectList";
+import { useDashboard } from "./hook";
+import { NewItemModal } from "../../components/NewItemModal";
+import { useMutation, useQuery } from "@apollo/client";
+import { PROJECTS } from "../../graphql/projects";
+import { CREATE_PROJECT } from "../../graphql/create-project";
+import { DELETE_PROJECT } from "../../graphql/delete-project";
+import { Sidebar } from "../../components/Sidebar";
 
 export const Dashboard: FC = (): JSX.Element => {
+    const { data, loading } = useQuery(PROJECTS);
+    const [onCreateProject] = useMutation(CREATE_PROJECT, {
+        refetchQueries: [
+            PROJECTS,
+            "PROJECTS"
+        ]
+    });
+    const [onDeleteProject] = useMutation(DELETE_PROJECT, {
+        refetchQueries: [
+            PROJECTS,
+            "PROJECTS"
+        ]
+    })
+
+
+    const { 
+        onToggleOpenDialog, 
+        openNewProjectDialog,  
+    } = useDashboard();
+
     return (
-        <Box bgcolor="#EEF1F2" display="flex" p={2}>
-            <Box p={2} width={220} height="90vh" bgcolor="#005EFF" borderRadius={6}>
-                <Box bgcolor="white" borderRadius={6} display="flex" alignItems="center" gap={2} p={2} >
-                    <SiPreact size={40} color="#005EFF" />
-                    <Typography level="title-sm" sx={{ color: "#005EFF" }} >React TodoList</Typography>
-                </Box>
-                <Box mt={2} borderRadius={6} display="flex" alignItems="center" gap={2} p={1} >
-                    <AiOutlineProject size={20} color="white" />
-                    <Typography level="title-sm" sx={{ color: "white" }}>Projects</Typography>
-                </Box>
-                <Box mt={2} borderRadius={6} display="flex" alignItems="center" gap={2} p={1} >
-                    <AiOutlineUser size={20} color="white" />
-                    <Typography level="title-sm" sx={{ color: "white" }}>Profile</Typography>
-                </Box>
-            </Box>
+        <Box display="flex" p={2}>
+            <Sidebar />
             <Box flex={1} px={2} >
-                <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" p={2} borderRadius={6} bgcolor="white" boxShadow="lg" >
-                    <CustomInput 
-                        type="text"
-                        startDecorator={
-                            (<FaSearch />)
-                        } 
-                        sx={{ width: 220, height: 40 }} 
-                        placeholder="Search" 
-                    />
-                    <Box display="flex" alignItems="center" gap={2}>
-                        <Avatar />
-                        <Typography level="title-md" >John Doe</Typography>
-                    </Box>
-                </Box>
-                <Box p={2} mt={2} width="100%" height="82%" bgcolor="white" boxShadow="lg" borderRadius={6} >
-                    <ProjectCard />
-                </Box>
+                <UserNavbar onOpeNewProjectDialog={onToggleOpenDialog} />
+                {
+                    loading ? <CircularProgress /> : (
+                        <ProjectList onDeleteProject={async (id) => await onDeleteProject({ variables: { id } })} projects={data ? data.projects : []} />
+                    )
+                }
             </Box>
+            <NewItemModal onClickWithTitle={async (title) => await onCreateProject({ variables: { title } })} open={openNewProjectDialog} onClose={onToggleOpenDialog} />
         </Box>
     )
 }

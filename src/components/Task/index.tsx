@@ -1,37 +1,55 @@
 import { FC } from "react";
-import { Box, Typography, Stack } from "@mui/joy";
-import { FaBookmark } from "react-icons/fa";
+import { Box, Typography, Stack, Chip } from "@mui/joy";
+import { IProps } from "./IProps";
 
-export const Task: FC = (): JSX.Element => {
+export const Task: FC<IProps> = (props): JSX.Element => {
+    let color: string = ""
+
+    switch (props.risk) {
+        case "Low":
+            color = "primary"
+            break;
+
+        case "Mid": {
+            color = "warning";
+            break;
+        }
+        
+        case "High": {
+            color = "danger";
+            break;
+        }
+    }
+
     return (
-        <Box width={320} bgcolor="white" p={2} borderRadius={6}>
+        <Box onClick={props.onClick} sx={{ cursor: "pointer", opacity: (props.status === "Done" ? 0.8 : 1) }} width={320} bgcolor="white" p={2} borderRadius={6}>
             <Stack direction="row" spacing={2}>
-                <Typography fontWeight="bold" fontSize={12} borderRadius={6} variant="soft" color="primary">
-                    Code
-                </Typography>
-                <Typography fontWeight="bold" fontSize={12} borderRadius={6} variant="soft" color="primary">
-                    Design
-                </Typography>
-                <Typography fontWeight="bold" fontSize={12} borderRadius={6} variant="soft" color="primary">
-                    UX
-                </Typography>
+                {
+                    props.tags.map((tag, index) => {
+                        return (
+                            <Typography key={index} fontWeight="bold" fontSize={12} borderRadius={6} variant="soft" color="primary">
+                                { tag }
+                            </Typography>
+                        )
+                    })
+                }
             </Stack>
-            <Typography mt={2} fontWeight="bold" fontSize={14} >
-                Create React App{" "}
+            <Typography sx={{ textDecoration: (props.status === "Done" ? "line-through" : "") }} mt={2} fontWeight="bold" fontSize={14} >
+                { props.title }{" "}
                 <Typography fontSize={14} variant="soft" color="primary">
-                    IN PROGRESS
+                    { props.status }
                 </Typography>
             </Typography>
-            <Typography level="body-sm" mt={2} >
-                In order to create the app we need to implement a create app alibrary...
-            </Typography>
-            <Box mt={2} width="100%" display="flex" alignItems="center" justifyContent="flex-end" gap={2}>
-                <Typography fontSize={12} variant="soft" color="primary" fontWeight="bold" startDecorator={(
-                    <FaBookmark />
-                )}>
-                    ID-49
-                </Typography>
+            <Box mt={1}>
+                <Chip sx={{ borderRadius: 6 }} variant="soft" color={color as any}>
+                    <Typography fontWeight="bold" fontSize={12}>
+                        { props.risk }
+                    </Typography>
+                </Chip>
             </Box>
+            <Typography sx={{ textDecoration: (props.status === "Done" ? "line-through" : "") }} level="body-sm" mt={2} >
+                { props.description }
+            </Typography>
         </Box>
     )
 }

@@ -3,6 +3,10 @@ import { Box, SvgIcon, Typography } from "@mui/joy";
 import { FaGithub } from "react-icons/fa";
 
 export const InfoSide: FC = (): JSX.Element => {
+    const navigate = (url: string) => {
+        window.open(url);
+    }
+
     return (
         <Box display="flex" flexDirection="column" justifyContent="space-between" flex={0.5} height="100vh" bgcolor="#005EFF" p={2}>
             <Typography level="h1" sx={{ color: "white" }} lineHeight={2}>
@@ -23,6 +27,7 @@ export const InfoSide: FC = (): JSX.Element => {
                         width="100%"
                         p={1}
                         borderRadius={6}
+                        onClick={() => navigate("https://github.com/MemiMint/react-ts-todolist")}
                     >
                         <SvgIcon color="primary" >
                             <FaGithub />

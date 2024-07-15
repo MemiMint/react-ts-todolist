@@ -36,7 +36,7 @@ export const CustomInput: FC<CustomInputProps> = (props): JSX.Element => {
                     ) : null
                 )}
             />
-            <FormHelperText>{props.helperText}</FormHelperText>
+            <FormHelperText sx={{ fontSize: 12, color: "red" }} >{props.helperText}</FormHelperText>
         </FormControl>
     )
 }

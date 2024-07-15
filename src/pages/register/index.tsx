@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box } from "@mui/joy/";
 import { InfoSide } from "../../components"
-import { RegisterForm } from "../../components/register";
+import { RegisterForm } from "../../components";
 
 export const Register: FC = (): JSX.Element => {
   return (
